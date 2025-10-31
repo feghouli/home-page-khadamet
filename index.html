@@ -253,49 +253,82 @@
   </footer>
 
   <script>
-    function openOptions(serviceType) {
+  // 🔹 حالة التسجيل لكل خدمة (true = مفتوح, false = مغلق)
+  const registrationStatus = {
+    "العمرة": false,
+    "الرحلات": false,
+    "المخيمات": false
+  };
+
+  function openOptions(serviceType) {
+    // تحقق من حالة التسجيل
+    if (!registrationStatus[serviceType]) {
       Swal.fire({
-        title: `اختر الفئة المناسبة للتسجيل في ${serviceType}`,
-        html: `
-          <div class="icon-container">
-            <div class="icon-btn employee" onclick="goToPage('${serviceType}', 'employees')">
-              <i class="fa-solid fa-user-tie"></i>
-              <span>الموظفون</span>
-            </div>
-            <div class="icon-btn retired" onclick="goToPage('${serviceType}', 'retired')">
-             <i class="fa-solid fa-user-group"></i>
-              <span>المتقاعدون و الأرامل</span>
-            </div>
-          </div>
-        `,
-        showConfirmButton: false,
-        showCancelButton: false,
+        icon: 'info',
+        title: '⛔ التسجيل مغلق حالياً',
+        html: `نأسف، التسجيل في 
+          "<span style="color:red; font-weight:bold;">${serviceType}</span>" 
+          غير متاح في الوقت الحالي.`,
+        confirmButtonText: 'حسناً',
+        customClass: {
+          confirmButton: 'cairo-btn'
+        },
+        confirmButtonColor: '#1976d2'
       });
+      return;
     }
 
-   function goToPage(serviceType, category) {
-  let link = '';
-  if (serviceType === 'العمرة') {
-    link = category === 'employees' 
-      ? 'رابط_صفحة_العمرة_الموظفين.html' 
-      : 'رابط_صفحة_العمرة_المتقاعدين.html';
-  } else if (serviceType === 'الرحلات') {
-    link = category === 'employees' 
-      ? 'https://feghouli.github.io/inscreption-employe/' 
-      : 'https://feghouli.github.io/retraite/';
-  } else if (serviceType === 'المخيمات') {
-    link = category === 'employees' 
-      ? 'رابط_صفحة_المخيمات_الموظفين.html' 
-      : 'رابط_صفحة_المخيمات_المتقاعدين.html';
+    // إذا التسجيل مفتوح
+    Swal.fire({
+      title: `اختر الفئة المناسبة للتسجيل في ${serviceType}`,
+      html: `
+        <div class="icon-container">
+          <div class="icon-btn employee" onclick="goToPage('${serviceType}', 'employees')">
+            <i class="fa-solid fa-user-tie"></i>
+            <span>الموظفون</span>
+          </div>
+          <div class="icon-btn retired" onclick="goToPage('${serviceType}', 'retired')">
+            <i class="fa-solid fa-user-group"></i>
+            <span>المتقاعدون و الأرامل</span>
+          </div>
+        </div>
+      `,
+      showConfirmButton: false,
+      showCancelButton: false,
+    });
   }
 
-  // فتح الرابط في نافذة جديدة
-  window.open(link, '_blank');
-}
+  function goToPage(serviceType, category) {
+    let link = '';
+    if (serviceType === 'العمرة') {
+      link = category === 'employees'
+        ? 'رابط_صفحة_العمرة_الموظفين.html'
+        : 'رابط_صفحة_العمرة_المتقاعدين.html';
+    } else if (serviceType === 'الرحلات') {
+      link = category === 'employees'
+        ? 'https://feghouli.github.io/inscreption-employe/'
+        : 'https://feghouli.github.io/retraite/';
+    } else if (serviceType === 'المخيمات') {
+      link = category === 'employees'
+        ? 'رابط_صفحة_المخيمات_الموظفين.html'
+        : 'رابط_صفحة_المخيمات_المتقاعدين.html';
+    }
 
-  </script>
+    window.open(link, '_blank');
+  }
+</script>
+
+<style>
+  /* 🔹 تطبيق خط Cairo على زر SweetAlert */
+  .swal2-confirm.cairo-btn {
+    font-family: 'Cairo', sans-serif !important;
+    font-weight: 600;
+  }
+</style>
+
 </body>
 </html>
+
 
 
 
