@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الصفحة الرئيسية - الخدمات الاجتماعية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #333;
+      background: linear-gradient(135deg, #e3f2fd 0%, #e0f7fa 100%);
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://www.transparenttextures.com/patterns/symphony.png');
+      opacity: 0.1;
+      z-index: -1;
+    }
+
+    .welcome-bar {
+      background: #0d47a1;
+      color: #fff;
+      padding: 10px 0;
+      font-size: 16px;
+      font-weight: 600;
+      overflow: hidden;
+    }
+
+    .welcome-text {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scrollText 15s linear infinite;
+    }
+
+    @keyframes scrollText {
+      from { transform: translateX(100%); }
+      to { transform: translateX(-100%); }
+    }
+
+    header {
+      background-color: #1976d2;
+      color: white;
+      padding: 25px 10px;
+      border-bottom-left-radius: 25px;
+      border-bottom-right-radius: 25px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    header img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    header p {
+      margin: 5px 0 0;
+      font-size: 16px;
+      opacity: 0.9;
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 25px;
+      padding: 40px 20px 60px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .service {
+      background-color: white;
+      border-radius: 20px;
+      padding: 25px 15px;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .service:nth-child(1) { animation-delay: 0.3s; }
+    .service:nth-child(2) { animation-delay: 0.6s; }
+    .service:nth-child(3) { animation-delay: 0.9s; }
+    .service:nth-child(4) { animation-delay: 1.2s; }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .service:hover {
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .service i {
+      font-size: 55px;
+      color: #1976d2;
+      margin-bottom: 15px;
+      transition: transform 0.4s ease;
+    }
+
+    .service:hover i {
+      transform: rotate(10deg) scale(1.1);
+    }
+
+    .service h3 {
+      margin: 10px 0 0;
+      font-size: 20px;
+      color: #0d47a1;
+      font-weight: 700;
+    }
+
+    footer {
+      background: #1976d2;
+      color: white;
+      padding: 15px;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+      font-size: 14px;
+    }
+
+    @media (max-width: 480px) {
+      .welcome-bar { font-size: 13px; }
+      header img { width: 70px; height: 70px; }
+      header h1 { font-size: 20px; }
+      .service i { font-size: 42px; }
+      .service h3 { font-size: 16px; }
+      footer { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="welcome-bar">
+    <div class="welcome-text">🎉 أهلاً وسهلاً بكم في البوابة الإلكترونية للخدمات الاجتماعية لعام 2025 🎉</div>
+  </div>
+
+  <header>
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="شعار الخدمات الاجتماعية">
+    <h1>الخدمات الاجتماعية</h1>
+    <p>مرحباً بكم في بوابة التسجيلات الإلكترونية</p>
+  </header>
+
+  <section class="services">
+    <div class="service" onclick="openOptions('العمرة')">
+      <i class="fa-solid fa-kaaba"></i>
+      <h3>تسجيلات العمرة</h3>
+    </div>
+
+    <div class="service" onclick="openOptions('الرحلات')">
+      <i class="fa-solid fa-bus"></i>
+      <h3>تسجيلات الرحلات</h3>
+    </div>
+
+    <div class="service" onclick="openOptions('المخيمات')">
+      <i class="fa-solid fa-campground"></i>
+      <h3>تسجيلات المخيمات</h3>
+    </div>
+
+    <div class="service" onclick="window.location.href='https://drive.google.com/file/d/1kMa5_uUT0ZW-TnC6u6T2IBNSJhRcwlFw/view?usp=sharing'">
+      <i class="fa-solid fa-file-pen"></i>
+      <h3>استمارات الخدمات</h3>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 - اللجنة الاجتماعية - جميع الحقوق محفوظة
+  </footer>
+
+  <script>
+    // دالة لفتح نافذة اختيار الفئة مع تصميم أيقونات جميل
+    function openOptions(serviceType) {
+      Swal.fire({
+        title: `اختر الفئة لخدمة ${serviceType}`,
+        html: `
+          <div style="display:flex; justify-content:center; gap:40px; margin-top:25px;">
+            <div onclick="redirectTo('${serviceType}', 'الموظفين')" 
+                 style="cursor:pointer; background:white; border:3px solid #1976d2; border-radius:20px; width:130px; padding:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1); transition:0.3s;">
+              <i class="fa-solid fa-user-tie" style="font-size:55px; color:#1976d2;"></i>
+              <p style="margin-top:8px; font-weight:700; color:#0d47a1;">الموظفون</p>
+            </div>
+
+            <div onclick="redirectTo('${serviceType}', 'المتقاعدون')" 
+                 style="cursor:pointer; background:white; border:3px solid #ff9800; border-radius:20px; width:130px; padding:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1); transition:0.3s;">
+              <i class="fa-solid fa-user-clock" style="font-size:55px; color:#ff9800;"></i>
+              <p style="margin-top:8px; font-weight:700; color:#e65100;">المتقاعدون و الأرامل</p>
+            </div>
+          </div>
+        `,
+        background: 'linear-gradient(145deg, #f5f9ff, #e8f4ff)',
+        showConfirmButton: false,
+        width: 430,
+        didOpen: () => {
+          const divs = Swal.getHtmlContainer().querySelectorAll('div[onclick]');
+          divs.forEach(d => {
+            d.addEventListener('mouseover', () => {
+              d.style.transform = 'scale(1.05)';
+              d.style.boxShadow = '0 6px 16px rgba(0,0,0,0.15)';
+            });
+            d.addEventListener('mouseout', () => {
+              d.style.transform = 'scale(1)';
+              d.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+            });
+          });
+        }
+      });
+    }
+
+    // التوجيه حسب الفئة
+    function redirectTo(serviceType, group) {
+      if (group === 'الموظفين') {
+        if (serviceType === 'العمرة') window.location.href = 'رابط_صفحة_العمرة_الموظفين.html';
+        if (serviceType === 'الرحلات') window.location.href = 'https://feghouli.github.io/inscreption-employe/';
+        if (serviceType === 'المخيمات') window.location.href = 'رابط_صفحة_المخيمات_الموظفين.html';
+      } else {
+        if (serviceType === 'العمرة') window.location.href = 'رابط_صفحة_العمرة_المتقاعدين.html';
+        if (serviceType === 'الرحلات') window.location.href = 'https://feghouli.github.io/retraite/';
+        if (serviceType === 'المخيمات') window.location.href = 'رابط_صفحة_المخيمات_المتقاعدين.html';
+      }
+    }
+  </script>
+
+</body>
+</html>
