@@ -273,20 +273,30 @@
       });
     }
 
-    function goToPage(serviceType, category) {
-      let link = '';
-      if (serviceType === 'العمرة') {
-        link = category === 'employees' ? 'رابط_صفحة_العمرة_الموظفين.html' : 'رابط_صفحة_العمرة_المتقاعدين.html';
-      } else if (serviceType === 'الرحلات') {
-        link = category === 'employees' ? 'https://feghouli.github.io/inscreption-employe/' : 'رابط_صفحة_الرحلات_المتقاعدين.html';
-      } else if (serviceType === 'المخيمات') {
-        link = category === 'employees' ? 'رابط_صفحة_المخيمات_الموظفين.html' : 'رابط_صفحة_المخيمات_المتقاعدين.html';
-      }
-      window.location.href = link;
-    }
+   function goToPage(serviceType, category) {
+  let link = '';
+  if (serviceType === 'العمرة') {
+    link = category === 'employees' 
+      ? 'رابط_صفحة_العمرة_الموظفين.html' 
+      : 'رابط_صفحة_العمرة_المتقاعدين.html';
+  } else if (serviceType === 'الرحلات') {
+    link = category === 'employees' 
+      ? 'https://feghouli.github.io/inscreption-employe/' 
+      : 'https://feghouli.github.io/retraite/';
+  } else if (serviceType === 'المخيمات') {
+    link = category === 'employees' 
+      ? 'رابط_صفحة_المخيمات_الموظفين.html' 
+      : 'رابط_صفحة_المخيمات_المتقاعدين.html';
+  }
+
+  // فتح الرابط في نافذة جديدة
+  window.open(link, '_blank');
+}
+
   </script>
 </body>
 </html>
+
 
 
 
