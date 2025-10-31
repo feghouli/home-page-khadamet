@@ -99,6 +99,8 @@
     .service:nth-child(2) { animation-delay: 0.6s; }
     .service:nth-child(3) { animation-delay: 0.9s; }
     .service:nth-child(4) { animation-delay: 1.2s; }
+    .service:nth-child(5) { animation-delay: 1.5s; }
+    .service:nth-child(6) { animation-delay: 1.8s; }
 
     @keyframes fadeInUp {
       to {
@@ -139,12 +141,7 @@
       font-size: 14px;
     }
 
-    @media (max-width: 480px) {
-      .service i { font-size: 42px; }
-      .service h3 { font-size: 16px; }
-    }
-
-    /* تنسيق الأيقونات داخل النافذة المنبثقة */
+    /* SweetAlert أيقونات */
     .swal2-popup .icon-container {
       display: flex;
       justify-content: center;
@@ -153,7 +150,7 @@
       margin-top: 20px;
     }
 
-    .swal2-popup .icon-btn {
+    .icon-btn {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -167,15 +164,8 @@
       height: 110px;
     }
 
-    .icon-btn i {
-      font-size: 38px;
-      margin-bottom: 8px;
-    }
-
-    .icon-btn span {
-      font-size: 14px;
-      font-weight: 600;
-    }
+    .icon-btn i { font-size: 38px; margin-bottom: 8px; }
+    .icon-btn span { font-size: 14px; font-weight: 600; }
 
     .icon-btn.employee {
       background: #e3f2fd;
@@ -198,20 +188,6 @@
       background: #fb8c00;
       color: white;
     }
-
-    @media (max-width: 480px) {
-      .swal2-popup .icon-btn {
-        width: 90px;
-        height: 90px;
-        padding: 10px;
-      }
-      .icon-btn i {
-        font-size: 30px;
-      }
-      .icon-btn span {
-        font-size: 12px;
-      }
-    }
   </style>
 </head>
 <body>
@@ -223,7 +199,6 @@
   <header>
     <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="شعار الخدمات الاجتماعية">
     <h1>الخدمات الإجتماعية </h1>
-   
   </header>
 
   <section class="services">
@@ -242,61 +217,79 @@
       <h3>المخيمات</h3>
     </div>
 
-    <div class="service" onclick="window.open('https://drive.google.com/file/d/1kMa5_uUT0ZW-TnC6u6T2IBNSJhRcwlFw/view?usp=sharing', '_blank')">
+    <div class="service" onclick="openOptions('استمارات الخدمات')">
       <i class="fa-solid fa-file-pen"></i>
       <h3>استمارات الخدمات</h3>
+    </div>
+
+    <div class="service" onclick="openOptions('السلف الإجتماعية')">
+      <i class="fa-solid fa-sack-dollar"></i>
+      <h3>السلف الإجتماعية</h3>
+    </div>
+
+    <div class="service" onclick="openOptions('الضوابط القانونية')">
+      <i class="fa-solid fa-scale-balanced"></i>
+      <h3>الضوابط القانونية</h3>
     </div>
   </section>
 
   <footer>
-    © 2025 - اللجنة الولائية للخدمات الاجتماعية لعمال الرتبية لولاية توقرت - جميع الحقوق محفوظة
+    © 2025 - اللجنة الولائية للخدمات الاجتماعية لعمال التربية لولاية توقرت - جميع الحقوق محفوظة
   </footer>
 
-
 <script>
-  // 🔹 حالة التسجيل لكل خدمة (true = مفتوح, false = مغلق)
+  // 🔹 التحكم بفتح وغلق التسجيلات
   const registrationStatus = {
     "العمرة": false,
     "الرحلات": false,
-    "المخيمات": false
+    "المخيمات": false,
+    "استمارات الخدمات": true,
+    "السلف الإجتماعية": false,
+    "الضوابط القانونية": true
   };
 
   function openOptions(serviceType) {
-    // تحقق من حالة التسجيل
     if (!registrationStatus[serviceType]) {
       Swal.fire({
         icon: 'info',
         title: '⛔ التسجيل مغلق حالياً',
         html: `نأسف، التسجيل في 
-          "<span style="color:red; font-weight:bold;">${serviceType}</span>" 
+          <span style="color:black; font-weight:bold;">${serviceType}</span> 
           غير متاح في الوقت الحالي.`,
         confirmButtonText: 'حسناً',
-        customClass: {
-          confirmButton: 'cairo-btn'
-        },
-        confirmButtonColor: '#1976d2'
+        confirmButtonColor: '#1976d2',
+        customClass: { confirmButton: 'cairo-btn' }
       });
       return;
     }
 
-    // إذا التسجيل مفتوح
-    Swal.fire({
-      title: `اختر الفئة المناسبة للتسجيل في ${serviceType}`,
-      html: `
-        <div class="icon-container">
-          <div class="icon-btn employee" onclick="goToPage('${serviceType}', 'employees')">
-            <i class="fa-solid fa-user-tie"></i>
-            <span>الموظفون</span>
+    if (serviceType === "استمارات الخدمات") {
+      window.open('https://drive.google.com/file/d/1kMa5_uUT0ZW-TnC6u6T2IBNSJhRcwlFw/view?usp=sharing', '_blank');
+    } 
+    else if (serviceType === "السلف المالية") {
+      window.open('صفحة_السلف.html', '_blank');
+    } 
+    else if (serviceType === "الضوابط القانونية") {
+      window.open('رابط_الملف_القانوني.pdf', '_blank');
+    } 
+    else {
+      Swal.fire({
+        title: `اختر الفئة المناسبة للتسجيل في ${serviceType}`,
+        html: `
+          <div class="icon-container">
+            <div class="icon-btn employee" onclick="goToPage('${serviceType}', 'employees')">
+              <i class="fa-solid fa-user-tie"></i>
+              <span>الموظفون</span>
+            </div>
+            <div class="icon-btn retired" onclick="goToPage('${serviceType}', 'retired')">
+              <i class="fa-solid fa-user-group"></i>
+              <span>المتقاعدون و الأرامل</span>
+            </div>
           </div>
-          <div class="icon-btn retired" onclick="goToPage('${serviceType}', 'retired')">
-            <i class="fa-solid fa-user-group"></i>
-            <span>المتقاعدون و الأرامل</span>
-          </div>
-        </div>
-      `,
-      showConfirmButton: false,
-      showCancelButton: false,
-    });
+        `,
+        showConfirmButton: false
+      });
+    }
   }
 
   function goToPage(serviceType, category) {
@@ -314,24 +307,16 @@
         ? 'رابط_صفحة_المخيمات_الموظفين.html'
         : 'رابط_صفحة_المخيمات_المتقاعدين.html';
     }
-
     window.open(link, '_blank');
   }
 </script>
 
 <style>
-  /* 🔹 تطبيق خط Cairo على زر SweetAlert */
   .swal2-confirm.cairo-btn {
     font-family: 'Cairo', sans-serif !important;
     font-weight: 600;
   }
 </style>
 
-
-
 </body>
 </html>
-
-
-
-
