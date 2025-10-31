@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <style>
     body {
       font-family: 'Cairo', sans-serif;
@@ -22,10 +23,8 @@
     body::before {
       content: "";
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       background: url('https://www.transparenttextures.com/patterns/symphony.png');
       opacity: 0.1;
       z-index: -1;
@@ -38,6 +37,7 @@
       font-size: 16px;
       font-weight: 600;
       overflow: hidden;
+      position: relative;
     }
 
     .welcome-text {
@@ -61,8 +61,7 @@
     }
 
     header img {
-      width: 90px;
-      height: 90px;
+      width: 90px; height: 90px;
       border-radius: 50%;
       border: 3px solid #fff;
       object-fit: cover;
@@ -73,12 +72,6 @@
       margin: 0;
       font-size: 26px;
       font-weight: 700;
-    }
-
-    header p {
-      margin: 5px 0 0;
-      font-size: 16px;
-      opacity: 0.9;
     }
 
     .services {
@@ -147,12 +140,77 @@
     }
 
     @media (max-width: 480px) {
-      .welcome-bar { font-size: 13px; }
-      header img { width: 70px; height: 70px; }
-      header h1 { font-size: 20px; }
       .service i { font-size: 42px; }
       .service h3 { font-size: 16px; }
-      footer { font-size: 12px; }
+    }
+
+    /* تنسيق الأيقونات داخل النافذة المنبثقة */
+    .swal2-popup .icon-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .swal2-popup .icon-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-radius: 20px;
+      padding: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 110px;
+      height: 110px;
+    }
+
+    .icon-btn i {
+      font-size: 38px;
+      margin-bottom: 8px;
+    }
+
+    .icon-btn span {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .icon-btn.employee {
+      background: #e3f2fd;
+      border: 2px solid #1976d2;
+      color: #0d47a1;
+    }
+
+    .icon-btn.employee:hover {
+      background: #1976d2;
+      color: white;
+    }
+
+    .icon-btn.retired {
+      background: #fff3e0;
+      border: 2px solid #fb8c00;
+      color: #e65100;
+    }
+
+    .icon-btn.retired:hover {
+      background: #fb8c00;
+      color: white;
+    }
+
+    @media (max-width: 480px) {
+      .swal2-popup .icon-btn {
+        width: 90px;
+        height: 90px;
+        padding: 10px;
+      }
+      .icon-btn i {
+        font-size: 30px;
+      }
+      .icon-btn span {
+        font-size: 12px;
+      }
     }
   </style>
 </head>
@@ -184,7 +242,7 @@
       <h3>تسجيلات المخيمات</h3>
     </div>
 
-    <div class="service" onclick="window.location.href='https://drive.google.com/file/d/1kMa5_uUT0ZW-TnC6u6T2IBNSJhRcwlFw/view?usp=sharing'">
+    <div class="service" onclick="window.location.href='رابط_صفحة_الاستمارات.html'">
       <i class="fa-solid fa-file-pen"></i>
       <h3>استمارات الخدمات</h3>
     </div>
@@ -195,57 +253,37 @@
   </footer>
 
   <script>
-    // دالة لفتح نافذة اختيار الفئة مع تصميم أيقونات جميل
     function openOptions(serviceType) {
       Swal.fire({
         title: `اختر الفئة لخدمة ${serviceType}`,
         html: `
-          <div style="display:flex; justify-content:center; gap:40px; margin-top:25px;">
-            <div onclick="redirectTo('${serviceType}', 'الموظفين')" 
-                 style="cursor:pointer; background:white; border:3px solid #1976d2; border-radius:20px; width:130px; padding:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1); transition:0.3s;">
-              <i class="fa-solid fa-user-tie" style="font-size:55px; color:#1976d2;"></i>
-              <p style="margin-top:8px; font-weight:700; color:#0d47a1;">الموظفون</p>
+          <div class="icon-container">
+            <div class="icon-btn employee" onclick="goToPage('${serviceType}', 'employees')">
+              <i class="fa-solid fa-user-tie"></i>
+              <span>الموظفون</span>
             </div>
-
-            <div onclick="redirectTo('${serviceType}', 'المتقاعدون')" 
-                 style="cursor:pointer; background:white; border:3px solid #ff9800; border-radius:20px; width:130px; padding:20px; box-shadow:0 4px 10px rgba(0,0,0,0.1); transition:0.3s;">
-              <i class="fa-solid fa-user-clock" style="font-size:55px; color:#ff9800;"></i>
-              <p style="margin-top:8px; font-weight:700; color:#e65100;">المتقاعدون و الأرامل</p>
+            <div class="icon-btn retired" onclick="goToPage('${serviceType}', 'retired')">
+              <i class="fa-solid fa-person-cane"></i>
+              <span>المتقاعدون و الأرامل</span>
             </div>
           </div>
         `,
-        background: 'linear-gradient(145deg, #f5f9ff, #e8f4ff)',
         showConfirmButton: false,
-        width: 430,
-        didOpen: () => {
-          const divs = Swal.getHtmlContainer().querySelectorAll('div[onclick]');
-          divs.forEach(d => {
-            d.addEventListener('mouseover', () => {
-              d.style.transform = 'scale(1.05)';
-              d.style.boxShadow = '0 6px 16px rgba(0,0,0,0.15)';
-            });
-            d.addEventListener('mouseout', () => {
-              d.style.transform = 'scale(1)';
-              d.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
-            });
-          });
-        }
+        showCancelButton: false,
       });
     }
 
-    // التوجيه حسب الفئة
-    function redirectTo(serviceType, group) {
-      if (group === 'الموظفين') {
-        if (serviceType === 'العمرة') window.location.href = 'رابط_صفحة_العمرة_الموظفين.html';
-        if (serviceType === 'الرحلات') window.location.href = 'https://feghouli.github.io/inscreption-employe/';
-        if (serviceType === 'المخيمات') window.location.href = 'رابط_صفحة_المخيمات_الموظفين.html';
-      } else {
-        if (serviceType === 'العمرة') window.location.href = 'رابط_صفحة_العمرة_المتقاعدين.html';
-        if (serviceType === 'الرحلات') window.location.href = 'https://feghouli.github.io/retraite/';
-        if (serviceType === 'المخيمات') window.location.href = 'رابط_صفحة_المخيمات_المتقاعدين.html';
+    function goToPage(serviceType, category) {
+      let link = '';
+      if (serviceType === 'العمرة') {
+        link = category === 'employees' ? 'رابط_صفحة_العمرة_الموظفين.html' : 'رابط_صفحة_العمرة_المتقاعدين.html';
+      } else if (serviceType === 'الرحلات') {
+        link = category === 'employees' ? 'رابط_صفحة_الرحلات_الموظفين.html' : 'رابط_صفحة_الرحلات_المتقاعدين.html';
+      } else if (serviceType === 'المخيمات') {
+        link = category === 'employees' ? 'رابط_صفحة_المخيمات_الموظفين.html' : 'رابط_صفحة_المخيمات_المتقاعدين.html';
       }
+      window.location.href = link;
     }
   </script>
-
 </body>
 </html>
