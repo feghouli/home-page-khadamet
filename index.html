@@ -60,13 +60,62 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
-    header img {
-      width: 90px; height: 90px;
-      border-radius: 50%;
-      border: 3px solid #fff;
-      object-fit: cover;
-      margin-bottom: 10px;
-    }
+    /* 🔹 حاوية الشعار */
+.logo-container {
+  position: relative;
+  display: inline-block;
+  width: 160px;
+  height: 160px;
+  margin-bottom: 10px;
+}
+
+/* 🔸 صورة الشعار */
+.logo-container img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulseLogo 2.5s ease-in-out infinite; /* 💓 نبض لطيف */
+}
+
+/* 🌀 الإطار الدائري المتحرك */
+.logo-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px dashed transparent;
+  background: linear-gradient(135deg, #1976d2, #26c6da);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  padding: 4px;
+  transform: translate(-50%, -50%);
+  animation: rotateRing 6s linear infinite; /* ⭕ دوران ناعم */
+}
+
+/* 🔄 حركة دوران الإطار */
+@keyframes rotateRing {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ❤️ حركة نبض الشعار */
+@keyframes pulseLogo {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.08); }
+}
+
 
     header h1 {
       margin: 0;
@@ -103,10 +152,7 @@
     .service:nth-child(6) { animation-delay: 1.8s; }
 
     @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .service:hover {
@@ -193,12 +239,16 @@
 <body>
 
   <div class="welcome-bar">
-    <div class="welcome-text">🎉 أهلاً وسهلاً بكم في بوابة التسجيلات الإلكترونية للجنة الولائية للخدمات الإجتماعية لعمال التربية لولاية توقرت 🎉</div>
+    <div class="welcome-text"> الجمهورية الجزائرية الديمقراطية الشعبية - وزارة التربية الوطنية - اللجنة الوطنية للخدمات الإجتماعية لعمال التربية </div>
   </div>
 
   <header>
-    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="شعار الخدمات الاجتماعية">
-    <h1>الخدمات الإجتماعية </h1>
+    <div class="logo-container">
+      <div class="logo-ring"></div>
+      <img src="https://lh3.googleusercontent.com/d/1AOSzlvuRb-fAO0bqvo412HcHTfpRAX15" alt="شعار الخدمات الاجتماعية">
+    </div>
+    <h1>الخدمات الإجتماعية توقرت</h1>
+    <p>أهلاً وسهلاً بكم في البوابة الإلكترونية للجنة الولائية للخدمات الإجتماعية لعمال التربية لولاية توقرت</p>
   </header>
 
   <section class="services">
@@ -217,19 +267,19 @@
       <h3>المخيمات</h3>
     </div>
 
-    <div class="service" onclick="openOptions('استمارات الخدمات')">
-      <i class="fa-solid fa-file-pen"></i>
-      <h3>استمارات الخدمات</h3>
-    </div>
-
     <div class="service" onclick="openOptions('السلف الإجتماعية')">
       <i class="fa-solid fa-sack-dollar"></i>
       <h3>السلف الإجتماعية</h3>
     </div>
 
-    <div class="service" onclick="openOptions('الضوابط القانونية')">
-      <i class="fa-solid fa-scale-balanced"></i>
-      <h3>الضوابط القانونية</h3>
+    <div class="service" onclick="openOptions('استمارات الخدمات')">
+      <i class="fa-solid fa-file-pen"></i>
+      <h3>استمارات الخدمات</h3>
+    </div>
+
+    <div class="service" onclick="openOptions('الضوابط العامة')">
+    <i class="fa-solid fa-scale-balanced"></i>
+      <h3>الضوابط العامة</h3>
     </div>
   </section>
 
@@ -238,14 +288,13 @@
   </footer>
 
 <script>
-  // 🔹 التحكم بفتح وغلق التسجيلات
   const registrationStatus = {
     "العمرة": false,
     "الرحلات": false,
     "المخيمات": false,
     "استمارات الخدمات": true,
     "السلف الإجتماعية": false,
-    "الضوابط القانونية": true
+    "الضوابط العامة": true
   };
 
   function openOptions(serviceType) {
@@ -254,7 +303,7 @@
         icon: 'info',
         title: '⛔ التسجيل مغلق حالياً',
         html: `نأسف، التسجيل في 
-          <span style="color:black; font-weight:bold;">${serviceType}</span> 
+          <span style="color:red; font-weight:bold;">${serviceType}</span> 
           غير متاح في الوقت الحالي.`,
         confirmButtonText: 'حسناً',
         confirmButtonColor: '#1976d2',
@@ -266,11 +315,11 @@
     if (serviceType === "استمارات الخدمات") {
       window.open('https://drive.google.com/file/d/1kMa5_uUT0ZW-TnC6u6T2IBNSJhRcwlFw/view?usp=sharing', '_blank');
     } 
-    else if (serviceType === "السلف المالية") {
+    else if (serviceType === "السلف الإجتماعية") {
       window.open('صفحة_السلف.html', '_blank');
     } 
-    else if (serviceType === "الضوابط القانونية") {
-      window.open('رابط_الملف_القانوني.pdf', '_blank');
+    else if (serviceType === "الضوابط العامة") {
+      window.open('https://drive.google.com/file/d/1GeIhUKVCZPHAOzb8jguj5OcDllh_bMbv/view?usp=sharing', '_blank');
     } 
     else {
       Swal.fire({
